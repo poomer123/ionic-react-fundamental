@@ -39,7 +39,7 @@ const App: React.FC = () => {
 					<Route path="/home" component={Todolist} exact={true} />
 					<Route path="/new" component={NewItem} exact={true} />
 					<Route path="/projects" component={Project} exact={true} />
-					<Route exact path="/" render={() => <Redirect to="/projects" />} />
+					<Route exact path="/" render={() => <Redirect to="/home" />} />
 				</IonRouterOutlet>
 			</IonReactRouter>
 			<IonLoading isOpen={isLoading} />
