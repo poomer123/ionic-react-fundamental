@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonLoading, IonRouterOutlet } from '@ionic/react';
+import { IonApp, IonIcon, IonLoading, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { home, list, newspaperOutline, imagesOutline } from 'ionicons/icons';
+import Home from './pages/Home';
 import Todolist from './pages/Todolist';
 import NewItem from './pages/NewItem';
 import Project from './pages/Project';
+import Gallery from './pages/Gallery';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -35,12 +38,34 @@ const App: React.FC = () => {
 	return (
 		<IonApp>
 			<IonReactRouter>
-				<IonRouterOutlet>
-					<Route path="/home" component={Todolist} exact={true} />
-					<Route path="/new" component={NewItem} exact={true} />
-					<Route path="/projects" component={Project} exact={true} />
-					<Route exact path="/" render={() => <Redirect to="/home" />} />
-				</IonRouterOutlet>
+				<IonTabs>
+					<IonTabBar slot="bottom">
+						<IonTabButton tab="home" href="/home">
+							<IonIcon icon={home} />
+							Home
+						</IonTabButton>
+						<IonTabButton tab="todo" href="/todolist">
+							<IonIcon icon={list} />
+							Todo
+						</IonTabButton>
+						<IonTabButton tab="projects" href="/projects">
+							<IonIcon icon={newspaperOutline} />
+							Projects
+						</IonTabButton>
+						<IonTabButton tab="gallery" href="/gallery">
+							<IonIcon icon={imagesOutline} />
+							Gallery
+						</IonTabButton>
+					</IonTabBar>
+					<IonRouterOutlet>
+						<Route path="/home" component={Home} exact={true} />
+						<Route path="/todolist" component={Todolist} exact={true} />
+						<Route path="/new" component={NewItem} exact={true} />
+						<Route path="/projects" component={Project} exact={true} />
+						<Route path="/gallery" component={Gallery} exact={true} />
+						<Route exact path="/" render={() => <Redirect to="/home" />} />
+					</IonRouterOutlet>
+				</IonTabs>
 			</IonReactRouter>
 			<IonLoading isOpen={isLoading} />
 		</IonApp>
