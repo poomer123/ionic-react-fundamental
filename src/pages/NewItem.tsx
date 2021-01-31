@@ -14,7 +14,7 @@ import {
 	IonBackButton,
 	IonAlert,
 } from '@ionic/react';
-import { save, text } from 'ionicons/icons';
+import { save } from 'ionicons/icons';
 
 import React, { useState } from 'react';
 
