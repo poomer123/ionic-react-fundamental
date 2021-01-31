@@ -12,10 +12,11 @@ import {
 	useIonViewDidLeave,
 	useIonViewWillEnter,
 	useIonViewWillLeave,
+	IonActionSheet,
 } from '@ionic/react';
-import { add } from 'ionicons/icons';
+import { add, trash } from 'ionicons/icons';
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import Todo from '../components/Todo';
@@ -27,6 +28,9 @@ const todos = [
 ];
 
 const Todolist: React.FC<RouteComponentProps> = (props) => {
+	const [showActionSheet, setShowActionSheet] = useState<boolean>(false);
+	const [selectedTask, setSelectedTask] = useState<number>();
+
 	useIonViewWillEnter(() => {
 		console.log('useIonViewWillEnter');
 	});
@@ -54,7 +58,16 @@ const Todolist: React.FC<RouteComponentProps> = (props) => {
 				</IonHeader>
 				<IonList>
 					{todos.map((todo) => {
-						return <Todo key={todo.id} {...todo} />;
+						return (
+							<Todo
+								key={todo.id}
+								{...todo}
+								onClinkAction={() => {
+									setSelectedTask(todo.id);
+									setShowActionSheet(true);
+								}}
+							/>
+						);
 					})}
 				</IonList>
 				<IonFab vertical="bottom" horizontal="end" slot="fixed">
@@ -62,6 +75,22 @@ const Todolist: React.FC<RouteComponentProps> = (props) => {
 						<IonIcon icon={add} />
 					</IonFabButton>
 				</IonFab>
+				<IonActionSheet
+					isOpen={showActionSheet}
+					buttons={[
+						{
+							text: 'Delete',
+							icon: trash,
+							role: 'destructive',
+							handler: () => {
+								alert(`Delete ${selectedTask}`);
+							},
+						},
+					]}
+					onDidDismiss={() => {
+						setShowActionSheet(false);
+					}}
+				></IonActionSheet>
 			</IonContent>
 		</IonPage>
 	);
