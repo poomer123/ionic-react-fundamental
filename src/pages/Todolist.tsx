@@ -15,7 +15,7 @@ import {
 	IonActionSheet,
 } from '@ionic/react';
 import { add, trash } from 'ionicons/icons';
-
+import { Plugins } from '@capacitor/core';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 
@@ -26,6 +26,8 @@ const todos = [
 	{ id: 2, name: 'Buy a Skooldio Course', deadline: 2 },
 	{ id: 3, name: 'Finish a Skooldio Course', deadline: 1 },
 ];
+
+const { Haptics } = Plugins;
 
 const Todolist: React.FC<RouteComponentProps> = (props) => {
 	const [showActionSheet, setShowActionSheet] = useState<boolean>(false);
@@ -65,6 +67,7 @@ const Todolist: React.FC<RouteComponentProps> = (props) => {
 								onClinkAction={() => {
 									setSelectedTask(todo.id);
 									setShowActionSheet(true);
+									Haptics.vibrate();
 								}}
 							/>
 						);

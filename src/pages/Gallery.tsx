@@ -1,7 +1,23 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+	IonContent,
+	IonFab,
+	IonFabButton,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonImg,
+	IonPage,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+	IonCol,
+} from '@ionic/react';
 import React from 'react';
+import { camera } from 'ionicons/icons';
+import useGetCamera from '../hooks/useGetCamera';
 
 const Gallery: React.FC = () => {
+	const { takePhoto, photos } = useGetCamera();
 	return (
 		<IonPage>
 			<IonHeader>
@@ -15,7 +31,20 @@ const Gallery: React.FC = () => {
 						<IonTitle size="large">Gallery</IonTitle>
 					</IonToolbar>
 				</IonHeader>
-				<h1 style={{ textAlign: 'center', marginTop: '40px' }}>Gallery Page Content</h1>
+				<IonGrid>
+					<IonRow>
+						{photos.map((photo, i) => (
+							<IonCol size="6" key={i}>
+								<IonImg src={photo.webviewPath} />
+							</IonCol>
+						))}
+					</IonRow>
+				</IonGrid>
+				<IonFab vertical="bottom" horizontal="center" slot="fixed">
+					<IonFabButton onClick={() => takePhoto()}>
+						<IonIcon icon={camera} />
+					</IonFabButton>
+				</IonFab>
 			</IonContent>
 		</IonPage>
 	);
